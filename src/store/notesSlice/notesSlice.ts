@@ -44,8 +44,12 @@ export const notesSlice = createSlice({
       state.noteList[id] = createNewTask(id);
       localStorage.setItem(LOCALSTORAGE_NOTES_KEY, JSON.stringify(state.noteList));
     },
-    addTag: (state, action: PayloadAction<{ tags: string[] }>) => {
-      state.allTags = [...new Set([...state.allTags, ...action.payload.tags])];
+    addTag: (state) => {
+      const allTags = [];
+      for (const key in state.noteList) {
+        allTags.push(...state.noteList[key].tags);
+      }
+      state.allTags = [...new Set(allTags)];
     },
     selectTag: (state, action: PayloadAction<{ tag: string }>) => {
       state.currentTag = action.payload.tag;

@@ -1,4 +1,4 @@
-import { FC, ChangeEventHandler, useState, useEffect } from 'react';
+import { FC, ChangeEventHandler, useState, useEffect, useRef } from 'react';
 import {
   Card,
   TextField,
@@ -12,6 +12,7 @@ import {
 import { Note, target } from '../../store/notesSlice/types';
 import { useAppDispatch } from '../../store/hooks/reduxHooks';
 import { updateNote, updateNoteTags, deleteNote, addTag } from '../../store/notesSlice/notesSlice';
+import { debounce } from 'lodash';
 interface NoteCardProps extends Note {
   className?: string;
 }
@@ -19,18 +20,37 @@ interface NoteCardProps extends Note {
 export const NoteCard: FC<NoteCardProps> = ({ name, text, id, tags }) => {
   const [updateble, setUpdateble] = useState<boolean>(false);
 
+  const [textVal, setTextVal] = useState<string>(text);
+
   const dispatch = useAppDispatch();
-  const handleChangeText: ChangeEventHandler<HTMLInputElement> = (e) => {
-    dispatch(updateNote({ id: id, value: e.target.value, target: target.TEXT }));
-    dispatch(updateNoteTags({ id: id, value: e.target.value }));
-  };
 
   const handleChangeName: ChangeEventHandler<HTMLInputElement> = (e) => {
     dispatch(updateNote({ id: id, value: e.target.value, target: target.NAME }));
   };
 
+  const handleChangeText: ChangeEventHandler<HTMLInputElement> = (e) => {
+    dispatch(updateNote({ id: id, value: e.target.value, target: target.TEXT }));
+    dispatch(updateNoteTags({ id: id, value: e.target.value }));
+  };
+  const debouncedTextChangeHandler = useRef(
+    debounce(async (val) => {
+      handleChangeText(val);
+    }, 1000),
+  ).current;
+
+  const handleDebounceText: ChangeEventHandler<HTMLInputElement> = (event): void => {
+    setTextVal(event.target.value);
+    debouncedTextChangeHandler(event);
+  };
+
   useEffect(() => {
-    dispatch(addTag({ tags }));
+    return () => {
+      debouncedTextChangeHandler.cancel();
+    };
+  }, [debouncedTextChangeHandler]);
+
+  useEffect(() => {
+    dispatch(addTag());
   }, [tags, dispatch]);
 
   return (
@@ -76,12 +96,12 @@ export const NoteCard: FC<NoteCardProps> = ({ name, text, id, tags }) => {
           sx={{
             display: !updateble ? 'none' : 'block',
           }}
-          onChange={handleChangeText}
+          onChange={handleDebounceText}
           name={name}
           id={id}
           multiline
           maxRows={6}
-          value={text}
+          value={textVal}
         />
         <FormControlLabel
           control={
