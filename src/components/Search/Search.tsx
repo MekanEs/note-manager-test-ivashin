@@ -5,7 +5,6 @@ import { selectTag } from '../../store/notesSlice/notesSlice';
 
 export const Search: FC = () => {
   const allTags = useAppSelector((state) => state.notes.allTags);
-  const currentTag = useAppSelector((state) => state.notes.currentTag);
   const dispatch = useAppDispatch();
 
   return (
@@ -18,7 +17,6 @@ export const Search: FC = () => {
         }}
         options={allTags}
         sx={{ width: 300 }}
-        defaultValue={currentTag}
         renderInput={(params) => <TextField {...params} label='Tags' />}
       />
     </div>

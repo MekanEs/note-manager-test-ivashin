@@ -12,7 +12,7 @@ export const Header: FC = () => {
     <div>
       <ApplicationBar>
         <header className='header'>
-          <span>Note Manager</span>
+          <span className='header-name'>Note Manager</span>
           <Search />
           <Button color='success' onClick={addNote} variant='outlined'>
             add note

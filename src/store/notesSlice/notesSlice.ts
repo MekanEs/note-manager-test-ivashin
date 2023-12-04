@@ -6,7 +6,6 @@ import { v4 as uuid } from 'uuid';
 const storageValue = localStorage.getItem(LOCALSTORAGE_NOTES_KEY);
 const savedState: NoteList = (storageValue && JSON.parse(storageValue)) || {
   test: { name: 'test', text: 'my first #test note', id: 'test', tags: ['#test'] },
-  test2: { name: 'test', text: 'my first #test note', id: 'test2', tags: ['#test2'] },
 };
 const createNewTask = (id: string) => ({
   name: 'new task',
