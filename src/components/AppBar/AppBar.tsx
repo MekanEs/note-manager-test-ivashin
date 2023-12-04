@@ -8,7 +8,7 @@ interface ApplicationBarProps {
 export const ApplicationBar: FC<ApplicationBarProps> = ({ children }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
+      <AppBar color='primary' position='static'>
         <Typography variant='h6' color='inherit' component='div'>
           {children}
         </Typography>

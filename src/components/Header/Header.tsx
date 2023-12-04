@@ -7,18 +7,18 @@ import { Search } from '../Search/Search';
 
 export const Header: FC = () => {
   const dispatch = useAppDispatch();
-  const addNote = () => dispatch(addNewNote());
+  const addNote = (): void => {
+    dispatch(addNewNote());
+  };
   return (
-    <div>
-      <ApplicationBar>
-        <header className='header'>
-          <span className='header-name'>Note Manager</span>
-          <Search />
-          <Button color='success' onClick={addNote} variant='outlined'>
-            add note
-          </Button>
-        </header>
-      </ApplicationBar>
-    </div>
+    <ApplicationBar>
+      <header className='header'>
+        <span className='header-name'>Note Manager</span>
+        <Search />
+        <Button color='secondary' onClick={addNote} variant='outlined'>
+          add note
+        </Button>
+      </header>
+    </ApplicationBar>
   );
 };
