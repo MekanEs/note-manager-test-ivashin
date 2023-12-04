@@ -1,0 +1,24 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: auto;
+}
+
+.tag {
+  background-color: rgba(17, 0, 255, 0.3);
+  text-decoration: underline;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+}
