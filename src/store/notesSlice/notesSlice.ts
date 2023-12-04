@@ -17,6 +17,7 @@ const createNewTask = (id: string) => ({
 const initialState: NoteState = {
   noteList: savedState,
   allTags: [],
+  currentTag: '',
 };
 
 export const notesSlice = createSlice({
@@ -46,10 +47,14 @@ export const notesSlice = createSlice({
     addTag: (state, action: PayloadAction<{ tags: string[] }>) => {
       state.allTags = [...new Set([...state.allTags, ...action.payload.tags])];
     },
+    selectTag: (state, action: PayloadAction<{ tag: string }>) => {
+      state.currentTag = action.payload.tag;
+    },
   },
 });
 
-export const { updateNote, updateNoteTags, deleteNote, addNewNote, addTag } = notesSlice.actions;
+export const { updateNote, updateNoteTags, deleteNote, addNewNote, addTag, selectTag } =
+  notesSlice.actions;
 
 export const selectNotes = (state: RootState) => state.notes.noteList;
 

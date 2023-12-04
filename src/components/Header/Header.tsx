@@ -3,6 +3,7 @@ import { ApplicationBar } from '../AppBar/AppBar';
 import { Button } from '@mui/material';
 import { useAppDispatch } from '../../store/hooks/reduxHooks';
 import { addNewNote } from '../../store/notesSlice/notesSlice';
+import { Search } from '../Search/Search';
 
 export const Header: FC = () => {
   const dispatch = useAppDispatch();
@@ -12,6 +13,7 @@ export const Header: FC = () => {
       <ApplicationBar>
         <header className='header'>
           <span>Note Manager</span>
+          <Search />
           <Button color='success' onClick={addNote} variant='outlined'>
             add note
           </Button>

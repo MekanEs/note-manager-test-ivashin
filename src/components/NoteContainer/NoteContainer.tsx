@@ -8,6 +8,8 @@ interface NoteContainerProps {}
 
 export const NoteContainer: FC<NoteContainerProps> = () => {
   const noteList = useAppSelector((state) => selectNotes(state));
+  const currentTag = useAppSelector((state) => state.notes.currentTag);
+
   return (
     <Box
       sx={{
@@ -19,9 +21,11 @@ export const NoteContainer: FC<NoteContainerProps> = () => {
         justifyContent: 'center',
       }}
     >
-      {Object.values(noteList).map((el) => (
-        <NoteCard key={el.id} {...el} />
-      ))}
+      {Object.values(noteList)
+        .filter((el) => (currentTag.length ? el.tags.includes(currentTag) : el))
+        .map((el) => (
+          <NoteCard key={el.id} {...el} />
+        ))}
     </Box>
   );
 };

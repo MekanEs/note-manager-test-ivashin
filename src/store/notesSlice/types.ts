@@ -10,6 +10,7 @@ export type NoteList = Record<string, Note>;
 export interface NoteState {
   noteList: NoteList;
   allTags: string[];
+  currentTag: string;
 }
 export enum target {
   NAME = 'name',
