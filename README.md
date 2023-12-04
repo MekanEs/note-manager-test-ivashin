@@ -1,5 +1,3 @@
-# React + TypeScript + Vite
-
 ## Task:
 
 ### Implement note-manager with ability to:
